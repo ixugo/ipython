@@ -4,15 +4,15 @@ import pyautogui
 # 获取屏幕尺寸，判断系统类型
 
 
-def IsWindows():
+def IsWindows() -> bool:
     return platform.system() == "Windows"
 
 
-def IsLinux():
+def IsLinux() -> bool:
     return platform.system() == "Linux"
 
 
-def IsMac():
+def IsMac() -> bool:
     return platform.system() == "Darwin"
 
 

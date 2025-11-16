@@ -14,7 +14,7 @@ def check_accessibility_permission():
         # 如果失败会抛出异常
         try:
             # 尝试获取鼠标位置（需要辅助功能权限）
-            current_pos = pyautogui.position()
+            pyautogui.position()
             print("✓ 辅助功能权限已授予")
             return True
         except Exception:
@@ -42,21 +42,6 @@ def check_accessibility_permission():
             print("⚠️  需要授予辅助功能权限才能执行点击操作！")
             print("=" * 60)
             print("\n正在打开系统设置页面...")
-            # 打开系统设置的辅助功能页面
-            open_settings_script = """
-            tell application "System Settings"
-                activate
-            end tell
-            delay 1
-            tell application "System Events"
-                tell process "System Settings"
-                    click menu item "隐私与安全性" of menu "系统设置" of menu bar 1
-                    delay 1
-                    click button "辅助功能" of scroll area 1 of group 1 of split group 1 of group 2 of split group 1 of window "隐私与安全性"
-                end tell
-            end tell
-            """
-            # 或者直接使用 URL scheme
             try:
                 subprocess.run(
                     [
@@ -77,7 +62,7 @@ def check_accessibility_permission():
                 for i in range(60):
                     time.sleep(1)
                     try:
-                        current_pos = pyautogui.position()
+                        pyautogui.position()
                         print("✓ 权限已授予！继续运行...")
                         return True
                     except:

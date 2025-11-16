@@ -1,17 +1,16 @@
 import cv2
 import os
 import sys
-import pyautogui
 
 try:
-    from . import capture_screen, screen
+    from . import capture_screen
 except ImportError:
     # 支持直接脚本运行：python game/opencv.py 或在 game 目录下 python opencv.py
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     if parent_dir not in sys.path:
         sys.path.insert(0, parent_dir)
-    from game import capture_screen, screen
+    from game import capture_screen
 
 
 # 比较图片相似度
@@ -37,7 +36,7 @@ def find_image(
 
     result = cv2.matchTemplate(screen_gray, target_gray, method)
     # 矩阵中的最小数值，最大数值，最小值所在坐标，最大值所在坐标
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    _, max_val, _, max_loc = cv2.minMaxLoc(result)
 
     # 如果原始尺寸匹配度已经很高，直接返回
     if max_val >= threshold:
@@ -68,7 +67,7 @@ def find_image(
             )
             # 执行模板匹配
             result = cv2.matchTemplate(screen_gray, scaled_target, method)
-            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+            _, max_val, _, max_loc = cv2.minMaxLoc(result)
             if max_val >= threshold:
                 # 计算中心点坐标,考虑缩放后的尺寸
                 center_x = max_loc[0] + scaled_w // 2
